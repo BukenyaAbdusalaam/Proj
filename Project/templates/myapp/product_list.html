@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Product List</title>
+</head>
+{% extends 'base.html' %}
+<br>
+    {% block content %}
+    
+    <!-- Search Form and Logo-->
+    
+    <div class="d-flex align-items-center justify-content-between mb-4">
+        <!-- Logo Section -->
+        <div class="logo">
+            <img src="https://seeklogo.com/images/U/ura-uganda-revenue-authority-logo-0F9199017A-seeklogo.com.png"
+                alt="Logo" class="img-fluid" style="max-width: 150px;">
+        </div>
+    
+        <!-- Search Form -->
+        <form method="GET" class="form-inline">
+            <input type="text" name="q" class="form-control mr-sm-2" placeholder="Search products..."
+                value="{{ request.GET.q }}">
+            <button type="submit" class="btn btn-outline-success">Search</button>
+        </form>
+    </div>
+    <h2 class="my-4">Value Database</h2>
+
+
+
+    <a href="{% url 'product_list' 'wines' %}" class="btn btn-primary btn-lg">Wines</a>
+    <a href="{% url 'product_list' 'televisions' %}" class="btn btn-primary btn-lg">Televisions</a>
+    <a href="{% url 'product_list'  'tyres' %}" class="btn btn-primary btn-lg">Car Tyres</a>
+    <a href="{% url 'product_list' 'lubricants' %}" class="btn btn-primary btn-lg">Lubricants</a>
+    <a href="{% url 'product_list' 'carpets' %}" class="btn btn-primary btn-lg">Carpets</a>
+    
+
+
+    <br></br>
+    {% if products %}
+    <table  class="table table-bordered table-hover">
+        <thead lass="thead-dark">
+            <tr>
+                {% if product_type == 'wines' %}
+                <th>Wine Name</th>
+                <th>Vintage</th>
+                <th>Price</th>
+                <th>Country Of Origin</th>
+                <th>Grape Variety</th>
+                <th>Wine Type</th>
+                {% elif product_type == 'televisions' %}
+                <th>Product Name</th>
+                <th>Currency</th>
+                <th>Prices</th>
+                <th>Discounts</th>
+                <th>Size</th>
+                <th>Description</th>
+                {% elif product_type == 'tyres' %}
+                <th>Product Name</th>
+                <th>Brand Name</th>
+                <th>Size</th>
+                <th>Load/Speed</th>
+                <th>Price(in USD$)</th>
+                <th>Load Range</th>
+                <th>Performance Type</th>
+                <th>Date of Extraction</th>
+                <th>Source</th>
+                {% elif product_type == 'lubricants' %}
+                <th>Product Name</th>
+                <th>Price</th>
+                <th>Currency</th>
+                <th>Capacity</th>
+                <th>Measure</th>
+                <th>Description</th>
+                <th>Date of Extraction</th>
+                {% elif product_type == 'carpets' %}
+                <th>Product Name</th>
+                <th>Size</th>
+                <th>Measure</th>
+                <th>Price</th>
+                <th>Currency</th>
+                <th>Color</th>
+                <th>Product Type</th>
+                <th>Discount</th>
+                <th>Product URL</th>
+                <th>Date of Extraction</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr>
+                {% if product_type == 'wines' %}
+                <td>{{ product.wine_name }}</td>
+                <td>{{ product.vintage }}</td>
+                <td>{{ product.price }}</td>
+                <td>{{ product.country_of_origin }}</td>
+                <td>{{ product.grape_variety }}</td>
+                <td>{{ product.wine_type }}</td>
+                {% elif product_type == 'televisions' %}
+                <td>{{ product.product }}</td>
+                <td>{{ product.currency }}</td>
+                <td>{{ product.price }}</td>
+                <td>{{ product.discount }}</td>
+                <td>{{ product.size }}</td>
+                <td>{{ product.description }}</td>
+                {% elif product_type == 'tyres' %}
+                <td>{{ product.product_name }}</td>
+                <td>{{ product.brand_name }}</td>
+                <td>{{ product.size }}</td>
+                <td>{{ product.load_speed }}</td>
+                <td>{{ product.price }}</td>
+                <td>{{ product.load_range }}</td>
+                <td>{{ product.performance_type }}</td>
+                <td>{{ product.date_of_extraction }}</td>
+                <td>{{ product.source }}</td>
+                {% elif product_type == 'lubricants' %}
+                <td>{{ product.product_name }}</td>
+                <td>{{ product.price }}</td>
+                <td>{{ product.currency }}</td>
+                <td>{{ product.capacity }}</td>
+                <td>{{ product.measure }}</td>
+                <td>{{ product.description }}</td>
+                <td>{{ product.date_of_extraction }}</td>
+                {% elif product_type == 'carpets' %}
+                <td>{{ product.product_name }}</td>
+                <td>{{ product.size }}</td>
+                <td>{{ product.measure }}</td>
+                <td>{{ product.price }}</td>
+                <td>{{ product.currency }}</td>
+                <td>{{ product.color }}</td>
+                <td>{{ product.product_type }}</td>
+                <td>{{ product.discount }}</td>
+                <td>{{ product.product_url }}</td>
+                <td>{{ product.date_of_extraction }}</td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No products available.</p>
+    {% endif %}
+    {% endblock %}
+</body>
+
+</html>
