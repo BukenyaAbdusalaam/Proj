@@ -6,7 +6,7 @@
 #     path('products/', product_list, name='product_list'),
 # ]
 from django.urls import path
-from .views import upload_file, upload_television_file, product_list, upload_lubricant_file
+from .views import upload_file, upload_television_file, product_list, upload_glass_file
 from . import views
 
 urlpatterns = [
@@ -19,4 +19,5 @@ urlpatterns = [
     path('upload_lubricant/', views.upload_lubricant_file, name='upload_lubricant'),
     path('upload_carpets/', views.upload_carpets_file, name='upload_carpets'),
      path('upload_cars/', views.upload_cars_file, name='upload_cars'),
+     path('upload_glass/', upload_glass_file, name='upload_glass'),
 ]

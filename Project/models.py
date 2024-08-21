@@ -82,3 +82,13 @@ class Car(models.Model):
     source = models.CharField(max_length=255)
 
   
+class Glass(models.Model):
+    product_name = models.CharField(max_length=255)
+    currency = models.CharField(max_length=10)
+    price =  models.CharField(max_length=100)
+    unit = models.CharField(max_length=100)
+    min_order =  models.CharField(max_length=100)
+    measure = models.CharField(max_length=100)
+    date_of_extraction = models.DateField(auto_now_add=True)
+
+  

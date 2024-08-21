@@ -4,7 +4,7 @@ from django.shortcuts import render
 import pandas as pd
 from django.shortcuts import render, redirect
 from .forms import UploadFileForm
-from .models import Product, Television, Tyres, Lubricants, Carpets, Car
+from .models import Product, Television, Tyres, Lubricants, Carpets, Car, Glass
 
 def upload_file(request):
     if request.method == 'POST':
@@ -64,6 +64,8 @@ def product_list(request, product_type=None):
         products = Carpets.objects.all()
     elif product_type == 'cars':
         products = Car.objects.all()
+    elif product_type == 'glass':
+        products = Glass.objects.all()
     else:
         products = None
     return render(request, 'myapp/product_list.html', {'products': products, 'product_type': product_type})
@@ -195,6 +197,18 @@ def product_list(request, product_type):
                 Q(type__icontains=query) |
                 Q(fuel_type__icontains=query)
             )
+    elif product_type == 'glass':
+        products = Glass.objects.all()
+        if query:
+            products = products.filter(
+            Q(product_name__icontains=query) |
+            Q(currency__icontains=query) |
+            Q(price__icontains=query) |
+            Q(unit__icontains=query) |
+            Q(min_order__icontains=query) |
+            Q(measure__icontains=query)
+        )
+    
     else:
         products = None
     
@@ -273,3 +287,29 @@ def upload_cars_file(request):
                 source=row['Source']
             )
     return render(request, 'myapp/upload_cars.html')
+
+
+
+
+def upload_glass_file(request):
+    if request.method == 'POST':
+        file = request.FILES['file']
+        if not file.name.endswith('.xlsx'):
+            return render(request, 'myapp/upload_glass.html', {'error': 'Invalid file type'})
+        
+        data = pd.read_excel(file)
+
+        for index, row in data.iterrows():
+            Glass.objects.create(
+                product_name=row['Product Name'],
+                currency=row['Currency'],
+                price=row['Price'],
+                unit=row['Unit'],
+                min_order=row['Min Order'],
+                measure=row['Measure'],
+            )
+
+        return redirect('product_list', product_type='glass')
+    
+    return render(request, 'myapp/upload_glass.html')
+

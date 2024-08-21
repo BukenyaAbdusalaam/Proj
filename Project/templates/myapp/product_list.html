@@ -1,5 +1,30 @@
 <!DOCTYPE html>
 <html>
+<style>
+    /* Make the table responsive */
+    .table-responsive {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Ensure the table wraps text */
+    table {
+        width: 100%;
+        table-layout: fixed;
+        /* Ensures that table cells have a fixed width */
+    }
+
+    th,
+    td {
+        word-wrap: break-word;
+        /* Allows text to wrap within the cell */
+        white-space: normal;
+        /* Makes text wrap normally */
+        padding: 8px;
+        text-align: left;
+        vertical-align: top;
+    }
+</style>
 
 <head>
     <title>Product List</title>
@@ -34,11 +59,13 @@
     <a href="{% url 'product_list' 'lubricants' %}" class="btn btn-primary btn-lg">Lubricants</a>
     <a href="{% url 'product_list' 'carpets' %}" class="btn btn-primary btn-lg">Carpets</a>
     <a href="{% url 'product_list' 'cars' %}" class="btn btn-primary btn-lg">Cars</a>
+    <a href="{% url 'product_list' 'glass' %}" class="btn btn-primary btn-lg">Glass</a>
     
 
 
     <br></br>
     {% if products %}
+    <div class="table-responsive">
     <table  class="table table-bordered table-hover">
         <thead lass="thead-dark">
             <tr>
@@ -95,6 +122,13 @@
                 <th>Fuel Type</th>
                 <th>Date of Extraction</th>
                 <th>Source</th>
+                {% elif product_type == 'glass' %}
+                <th>Product Name</th>
+                <th>Currency</th>
+                <th>Price</th>
+                <th>Unit</th>
+                <th>Min Order</th>
+                <th>Measure</th>
                 {% endif %}
             </tr>
         </thead>
@@ -154,11 +188,19 @@
                 <td>{{ product.fuel_type }}</td>
                 <td>{{ product.date_of_extraction }}</td>
                 <td>{{ product.source }}</td>
+                {% elif product_type == 'glass' %}
+                <td>{{ product.product_name }}</td>
+                <td>{{ product.currency }}</td>
+                <td>{{ product.price }}</td>
+                <td>{{ product.unit }}</td>
+                <td>{{ product.min_order }}</td>
+                <td>{{ product.measure }}</td>
                 {% endif %}
             </tr>
             {% endfor %}
         </tbody>
     </table>
+    </div>
     {% else %}
     <p>No products available.</p>
     {% endif %}
