@@ -24,7 +24,7 @@
             <button type="submit" class="btn btn-outline-success">Search</button>
         </form>
     </div>
-    <h2 class="my-4">Value Database</h2>
+    <h2 class="my-4">Value Data Bank</h2>
 
 
 
@@ -33,6 +33,7 @@
     <a href="{% url 'product_list'  'tyres' %}" class="btn btn-primary btn-lg">Car Tyres</a>
     <a href="{% url 'product_list' 'lubricants' %}" class="btn btn-primary btn-lg">Lubricants</a>
     <a href="{% url 'product_list' 'carpets' %}" class="btn btn-primary btn-lg">Carpets</a>
+    <a href="{% url 'product_list' 'cars' %}" class="btn btn-primary btn-lg">Cars</a>
     
 
 
@@ -84,6 +85,16 @@
                 <th>Discount</th>
                 <th>Product URL</th>
                 <th>Date of Extraction</th>
+                {% elif product_type == 'cars' %}
+                <th>Reference Number</th>
+                <th>Mileage</th>
+                <th>Year</th>
+                <th>Engine</th>
+                <th>Type</th>
+                <th>Price</th>
+                <th>Fuel Type</th>
+                <th>Date of Extraction</th>
+                <th>Source</th>
                 {% endif %}
             </tr>
         </thead>
@@ -133,6 +144,16 @@
                 <td>{{ product.discount }}</td>
                 <td>{{ product.product_url }}</td>
                 <td>{{ product.date_of_extraction }}</td>
+                {% elif product_type == 'cars' %}
+                <td>{{ product.refrence_number }}</td>
+                <td>{{ product.mileage }}</td>
+                <td>{{ product.year }}</td>
+                <td>{{ product.engine }}</td>
+                <td>{{ product.type }}</td>
+                <td>{{ product.price }}</td>
+                <td>{{ product.fuel_type }}</td>
+                <td>{{ product.date_of_extraction }}</td>
+                <td>{{ product.source }}</td>
                 {% endif %}
             </tr>
             {% endfor %}

@@ -69,3 +69,16 @@ class Carpets(models.Model):
 
     
 
+
+class Car(models.Model):
+    reference_number = models.CharField(max_length=100)
+    mileage = models.IntegerField()
+    year = models.CharField(max_length=50)
+    engine = models.CharField(max_length=100)  # Engine
+    type = models.CharField(max_length=100)    # Type
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    fuel_type = models.CharField(max_length=50)
+    date_of_extraction = models.DateField()
+    source = models.CharField(max_length=255)
+
+  

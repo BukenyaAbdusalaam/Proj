@@ -4,7 +4,7 @@ from django.shortcuts import render
 import pandas as pd
 from django.shortcuts import render, redirect
 from .forms import UploadFileForm
-from .models import Product, Television, Tyres, Lubricants, Carpets
+from .models import Product, Television, Tyres, Lubricants, Carpets, Car
 
 def upload_file(request):
     if request.method == 'POST':
@@ -62,6 +62,8 @@ def product_list(request, product_type=None):
         products = Lubricants.objects.all()
     elif product_type == 'carpets':
         products = Carpets.objects.all()
+    elif product_type == 'cars':
+        products = Car.objects.all()
     else:
         products = None
     return render(request, 'myapp/product_list.html', {'products': products, 'product_type': product_type})
@@ -182,6 +184,17 @@ def product_list(request, product_type):
                 Q(product_type__icontains=query) |
                 Q(discount__icontains=query)
             )
+    elif product_type == 'cars':
+        products = Car.objects.all()
+        if query:
+            products = products.filter(
+                Q(reference_number__icontains=query) |
+                Q(mileage__icontains=query) |
+                Q(year__icontains=query) |
+                Q(engine__icontains=query) |
+                Q(type__icontains=query) |
+                Q(fuel_type__icontains=query)
+            )
     else:
         products = None
     
@@ -240,3 +253,23 @@ def upload_carpets_file(request):
         return redirect('product_list', product_type='carpets')
 
     return render(request, 'myapp/upload_carpets.html')
+
+from .models import Car
+
+def upload_cars_file(request):
+    if request.method == 'POST':
+        csv_file = request.FILES['file']
+        df = pd.read_csv(csv_file)
+        for _, row in df.iterrows():
+            Car.objects.create(
+                reference_number=row['Reference Number'],
+                mileage=row['Mileage'],
+                year=row['Year'],
+                engine=row['Engine'],
+                type=row['Type'],
+                price=row['Price'],
+                fuel_type=row['Fuel type'],
+                date_of_extraction=row['Date of extraction'],
+                source=row['Source']
+            )
+    return render(request, 'myapp/upload_cars.html')
