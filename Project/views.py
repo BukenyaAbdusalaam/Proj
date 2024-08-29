@@ -4,7 +4,7 @@ from django.shortcuts import render
 import pandas as pd
 from django.shortcuts import render, redirect
 from .forms import UploadFileForm
-from .models import Product, Television, Tyres, Lubricants, Carpets, Car, Glass
+from .models import Product, Television, Tyres, Lubricants, Carpets, Car, Glass, Perfume
 
 def upload_file(request):
     if request.method == 'POST':
@@ -66,6 +66,8 @@ def product_list(request, product_type=None):
         products = Car.objects.all()
     elif product_type == 'glass':
         products = Glass.objects.all()
+    elif product_type == 'perfumes':
+        products = Perfume.objects.all()
     else:
         products = None
     return render(request, 'myapp/product_list.html', {'products': products, 'product_type': product_type})
@@ -121,11 +123,6 @@ def upload_tyres_file(request):
 
 
 # Querry search
-
-
-from django.db.models import Q
-
-
 
 
 from django.db.models import Q
@@ -208,6 +205,19 @@ def product_list(request, product_type):
             Q(min_order__icontains=query) |
             Q(measure__icontains=query)
         )
+    elif product_type == 'perfumes':
+        products = Perfume.objects.all()
+
+        if query:
+            products = products.filter(
+                Q(perfume_name__icontains=query) |
+                Q(currency__icontains=query) |
+                Q(price__icontains=query) |
+                Q(discount__icontains=query) |
+                Q(volume__icontains=query) |
+                Q(url__icontains=query) |
+                Q(date_of_extraction__icontains=query)
+            )
     
     else:
         products = None
@@ -313,3 +323,22 @@ def upload_glass_file(request):
     
     return render(request, 'myapp/upload_glass.html')
 
+def upload_perfumes_file(request):
+    if request.method == 'POST':
+        excel_file = request.FILES['file']
+        df = pd.read_excel(excel_file)
+
+        for _, row in df.iterrows():
+            Perfume.objects.create(
+                perfume_name=row['Perfume Name'],
+                currency=row['Currency'],
+                price=row['Price'],
+                discount=row['Discount'],
+                volume=row['Volume'],
+                url=row['URL'],
+                date_of_extraction=row['Date of extraction']
+            )
+
+        return redirect('product_list', product_type='perfumes')
+
+    return render(request, 'myapp/upload_perfumes.html')

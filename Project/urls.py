@@ -18,6 +18,8 @@ urlpatterns = [
     path('products_list/<str:product_type>/', product_list, name='product_list'),
     path('upload_lubricant/', views.upload_lubricant_file, name='upload_lubricant'),
     path('upload_carpets/', views.upload_carpets_file, name='upload_carpets'),
-     path('upload_cars/', views.upload_cars_file, name='upload_cars'),
-     path('upload_glass/', upload_glass_file, name='upload_glass'),
+    path('upload_cars/', views.upload_cars_file, name='upload_cars'),
+    path('upload_glass/', upload_glass_file, name='upload_glass'),
+    path('upload_perfumes/', views.upload_perfumes_file, name='upload_perfumes'),
+
 ]

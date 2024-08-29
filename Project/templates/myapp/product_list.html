@@ -60,6 +60,7 @@
     <a href="{% url 'product_list' 'carpets' %}" class="btn btn-primary btn-lg">Carpets</a>
     <a href="{% url 'product_list' 'cars' %}" class="btn btn-primary btn-lg">Cars</a>
     <a href="{% url 'product_list' 'glass' %}" class="btn btn-primary btn-lg">Glass</a>
+    <a href="{% url 'product_list' 'perfumes' %}" class="btn btn-primary btn-lg">Perfumes</a>
     
 
 
@@ -129,6 +130,14 @@
                 <th>Unit</th>
                 <th>Min Order</th>
                 <th>Measure</th>
+                {% elif product_type == 'perfumes' %}
+                <th>Perfume Name</th>
+                <th>Currency</th>
+                <th>Price</th>
+                <th>Discount</th>
+                <th>Volume</th>
+                <th>URL</th>
+                <th>Date of Extraction</th>
                 {% endif %}
             </tr>
         </thead>
@@ -195,6 +204,14 @@
                 <td>{{ product.unit }}</td>
                 <td>{{ product.min_order }}</td>
                 <td>{{ product.measure }}</td>
+                {% elif product_type == 'perfumes' %}
+                <td>{{ product.perfume_name }}</td>
+                <td>{{ product.currency }}</td>
+                <td>{{ product.price }}</td>
+                <td>{{ product.discount }}</td>
+                <td>{{ product.volume }}</td>
+                <td>{{ product.url }}</a></td>
+                <td>{{ product.date_of_extraction }}</td>
                 {% endif %}
             </tr>
             {% endfor %}

@@ -91,4 +91,15 @@ class Glass(models.Model):
     measure = models.CharField(max_length=100)
     date_of_extraction = models.DateField(auto_now_add=True)
 
+from django.db import models
+
+class Perfume(models.Model):
+    perfume_name = models.CharField(max_length=255)
+    currency = models.CharField(max_length=10)
+    price = models.CharField(max_length=10)
+    discount = models.CharField(max_length=10)
+    volume = models.CharField(max_length=100)
+    url = models.URLField()
+    date_of_extraction = models.DateField()
+
   
