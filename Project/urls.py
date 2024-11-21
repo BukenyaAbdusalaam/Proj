@@ -1,10 +1,3 @@
-# from django.urls import path
-# from .views import upload_file, product_list
-
-# urlpatterns = [
-#     path('upload/', upload_file, name='upload_file'),
-#     path('products/', product_list, name='product_list'),
-# ]
 from django.urls import path
 from .views import upload_file, upload_television_file, product_list, upload_glass_file
 from . import views
